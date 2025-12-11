@@ -18,8 +18,8 @@ GRID = "██"
 GRID_SIZE = 20
 
 DIRECTION = "STALL"
-MAX_BOARD_HEIGHT = 5
-MAX_BOARD_WIDTH = 5
+MAX_BOARD_HEIGHT = 10
+MAX_BOARD_WIDTH = 10
 
 MAX_SNAKE_SIZE = MAX_BOARD_HEIGHT * MAX_BOARD_WIDTH
 
@@ -77,6 +77,7 @@ def snake_move_carry(
 
 
 def snake_move():
+
     global SCORE
     render()
 
@@ -96,26 +97,26 @@ def snake_move():
     if DIRECTION == "down":
         block_row = block_row + 1
         if block_row > MAX_BOARD_HEIGHT - 1:
-            snake_collided(f"out of boundary :down {block_row}")
+            end_snake(f"out of boundary :down {block_row}")
             return
 
     if DIRECTION == "up":
         block_row = block_row - 1
 
         if block_row < 0:
-            snake_collided("out of boundary : up")
+            end_snake("out of boundary : up")
             return
 
     if DIRECTION == "left":
         block_col = block_col - 1
         if block_col < 0:
-            snake_collided("out of boundary :left")
+            end_snake("out of boundary :left")
             return
 
     if DIRECTION == "right":
         block_col = block_col + 1
         if block_col > MAX_BOARD_WIDTH - 1:
-            snake_collided("out of boundary :right")
+            end_snake("out of boundary :right")
             return
 
     render()
@@ -153,34 +154,32 @@ def snake_move():
 
 
 def new_snake_food():
-    render()
     global food_pos
+    food_location = []
 
-    food_location  = [ ]
-    old_food_row, old_food_col = food_pos
-
+    render()
     for row_i in range(0, MAX_BOARD_HEIGHT):
         for col_i in range(0, MAX_BOARD_WIDTH):
-            if board[row_i][col_i] == 0 and row_i != old_food_row and col_i != old_food_col:
+            if board[row_i][col_i] == 0 :
                 food_location.append([row_i, col_i])
-  
-    if len(food_location) > 0:
-        index = random.randint(0, len(food_location)-1)
-        location = food_location[index]
-                
-        food_pos = location
+                # food_pos = [row_i, col_i]
+    if len(food_location) == 0:
+        end_snake() 
+    
+    index = random.randint(0, len(food_location)-1)
+    food_pos = food_location[index]
+    render()
 
-        
-
-def snake_collided(message: str | None = None):
-    print("Snake Collieded")
-    print(message)
-    end_snake()
    
 
-def end_snake():
+       
+
+def end_snake(message:str|None=None):
 
     print("Your Score : " , SCORE)
+
+    if message:
+        print(message)
 
     exit()
 
