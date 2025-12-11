@@ -185,6 +185,8 @@ def end_snake(message:str|None=None):
 
 def configure():
     global AUTO_PILOT
+
+    print("keyboard button : up / down / left / right ")
     speed_run  = input("Enable auto pilot run y/n ")[0:1].lower()
     print(speed_run == "y")
     AUTO_PILOT = speed_run == "y"
