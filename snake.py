@@ -18,19 +18,15 @@ GRID = "██"
 GRID_SIZE = 20
 
 DIRECTION = "STALL"
-MAX_BOARD_HEIGHT = 10
-MAX_BOARD_WIDTH = 20
+MAX_BOARD_HEIGHT = 5
+MAX_BOARD_WIDTH = 5
 
 MAX_SNAKE_SIZE = MAX_BOARD_HEIGHT * MAX_BOARD_WIDTH
 
 board = [[0] * MAX_BOARD_WIDTH for _ in range(MAX_BOARD_HEIGHT)]
-# 0:empty
-# 1: snake_body
-# 2: food
+snake_body = [[0, 0]]
 
-snake_body = [[0, 0], [0, 1], [0, 2], [0, 3]]
-
-food_pos = [5, 5]
+food_pos = [MAX_BOARD_HEIGHT // 2, MAX_BOARD_WIDTH //2 ]
 
 
 def print_board():
@@ -51,6 +47,7 @@ def render():
         row, col = block
         board[row][col] = 1
 
+    print(food_pos)
     row, col = food_pos
     board[row][col] = 2
 
@@ -138,7 +135,8 @@ def snake_move():
         block_number=block_number - 1,
         updated_block_row=old_block_row,
         updated_block_col=old_block_col,
-        ) 
+        )
+
 
 
         # snake_move()
@@ -158,7 +156,7 @@ def new_snake_food():
     render()
     global food_pos
 
-    food_location  = [ [int, int]]
+    food_location  = [ ]
     old_food_row, old_food_col = food_pos
 
     for row_i in range(0, MAX_BOARD_HEIGHT):
