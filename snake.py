@@ -10,7 +10,8 @@ last_move_time = 0
 SCORE = 0
 
 BRIGHT_GREEN = "\033[92m"
-BRIGHT_RED = "\033[91m"
+BRIGHT_RED = "\033[31m"
+BG = "\033[30m"
 RESET = "\033[0m"
 
 GRID = "██"
@@ -35,7 +36,7 @@ food_pos = [5, 5]
 def print_board():
     os.system("clear")
 
-    mapping = {0: GRID, 1: BRIGHT_GREEN + GRID + RESET, 2: BRIGHT_RED + GRID + RESET}
+    mapping = {0: BG + GRID + RESET, 1: BRIGHT_GREEN + GRID + RESET, 2: BRIGHT_RED + GRID + RESET}
 
     result = "\n".join("".join(mapping[v] for v in row) for row in board)
 
@@ -132,7 +133,15 @@ def snake_move():
         snake_body.append([food_row, food_col])
         SCORE += 1
         new_snake_food()
-        snake_move()
+
+        snake_move_carry(
+        block_number=block_number - 1,
+        updated_block_row=old_block_row,
+        updated_block_col=old_block_col,
+        ) 
+
+
+        # snake_move()
     #
     snake_body[block_number] = [block_row, block_col]
 
